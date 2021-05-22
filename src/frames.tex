@@ -2,3 +2,35 @@
   \titlepage
   \hypertarget{titlePage}{}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Write path}
+  \sqlinline{CREATE TABLE arrs (pk int, a int[]);}
+
+  \sqlinline{CREATE INDEX ON arrs USING gin (a);}
+  \pause
+
+  \sqlinline{INSERT INTO arrs VALUES (11, '{1, 3, 5, 3}');}
+  \pause
+
+  \begin{itemize}
+    \item insert to the main table
+    \pause
+    \item insert to the secondary index
+    \pause
+      \begin{itemize}
+        \item extract deduped entries: \textinline{1}, \textinline{3},
+          \textinline{5}
+        \pause
+        \item write records \emph{entry} $\rightarrow$ \emph{pk}:
+        \pause
+          \begin{itemize}
+            \item \textinline{1} $\rightarrow$ \textinline{11}
+            \pause
+            \item \textinline{3} $\rightarrow$ \textinline{11}
+            \pause
+            \item \textinline{5} $\rightarrow$ \textinline{11}
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
