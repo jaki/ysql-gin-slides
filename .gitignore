@@ -6,3 +6,4 @@
 *.pdf
 *.toc
 *.vrb
+_minted-*/

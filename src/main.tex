@@ -3,6 +3,7 @@
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[os=win]{menukeys}
+\usepackage{minted}
 
 \usecolortheme{beaver}
 
@@ -16,6 +17,36 @@
 \setbeamertemplate{footline}[my foot]
 
 \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+% Package: minted.
+\setminted{%
+    breakanywhere=true,
+    breaklines=true,
+    fontsize=\small,
+}
+\newcommand{\setnewminted}[1]{%
+    \newminted{#1}{%
+        frame=leftline,
+    }
+}
+\newcommand{\setnewmintedfile}[1]{%
+    \newmintedfile{#1}{%
+        autogobble,
+        frame=single,
+        label=##2,
+    }
+}
+\newcommand{\setnewmintinline}[1]{%
+    \newmintinline{#1}{%
+    }
+}
+\newcommand{\setnewmintall}[1]{%
+    \setnewminted{#1}
+    \setnewmintedfile{#1}
+    \setnewmintinline{#1}
+}
+\setnewmintall{sql}
+\setnewmintall{text}
 
 \mode<presentation>
 
