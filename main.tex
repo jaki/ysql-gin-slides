@@ -1,0 +1,41 @@
+\documentclass{beamer}
+
+\usepackage{calc}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[os=win]{menukeys}
+\usepackage{xspace}
+
+\usecolortheme{beaver}
+
+\newcommand{\singleitem}[1]{\begin{itemize}\item #1\end{itemize}}
+\newcommand{\pdfpc}{\texttt{pdfpc}\xspace}
+\newcommand{\opt}[1]{\texttt{#1}\xspace}
+
+\setbeamertemplate{navigation symbols}{}
+
+\defbeamertemplate{footline}{my foot}{%
+\vskip1pt%
+\makebox[0pt][l]{YugabyteDB}%
+\hspace*{\fill}\insertshorttitle\hspace*{\fill}%
+\llap{\insertframenumber\phantom{/}}
+}
+\setbeamertemplate{footline}[my foot]
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+\mode<presentation>
+
+\title{Yugabyte GIN indexes talk}
+\author{Jason Kim}
+\date{\today}
+\institute{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \hypertarget{titlePage}{}
+\end{frame}
+
+\end{document}
