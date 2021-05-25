@@ -4,6 +4,26 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Intro}
+  \begin{itemize}
+    \item "regular" indexes map \emph{columns} to \emph{pkeys}
+      \pause
+    \item GIN indexes map \textbf{\emph{elements inside container columns}} to
+      \emph{pkeys}
+      \pause
+    \item Upstream postgres supports GIN indexes on types
+      \begin{itemize}
+        \item tsvector
+        \item anyarray
+        \item jsonb
+      \end{itemize}
+      \pause
+    \item Yugabyte will support GIN indexes on the same types, but
+      prioritization is in the order above
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Write path}
   \sqlinline{CREATE TABLE arrs (pk char, a int[]);}
 
