@@ -47,6 +47,7 @@
   Second, select rows whose array column intersects with \sqlinline{'{5}'}:
 
   \sqlinline{SELECT * FROM arrs WHERE a && '{5}';}
+  \pause
 
   This will be an index scan (not index only scan).
   \pause
