@@ -78,23 +78,41 @@
   \begin{itemize}
     \item extract scan entries: \sqlinline{5}
       \pause
-    \item set up binds on index
+    \item scan index with
       \begin{itemize}
-        \item \textinline{a}$'$ $=$ \sqlinline{5}
+        \item bind: \textinline{a}$'$ $=$ \sqlinline{5}
+          \pause
+        \item target: \cinline{YBIdxBaseTupleIdAttributeNumber}
+          \pause
+        \item get: \sqlinline{'i'}, \sqlinline{'k'}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Read path (continued)}
+  \begin{itemize}
+    \item scan main table with
+      \begin{itemize}
+        \item bind: \textinline{pk} $=$ \sqlinline{'i'}
+          \pause
+        \item target: \cinline{YBTupleIdAttributeNumber} (not really needed)
+        \item target: \textinline{pk} (for \sqlinline{SELECT *})
+        \item target: \textinline{a} (for \sqlinline{SELECT *})
+          \pause
+        \item get: \{\sqlinline{'i'}, \sqlinline{ARRAY[1, 3, 5, 3]}\}
       \end{itemize}
       \pause
-    \item set up targets on both index and indexed table
+    \item scan main table with
       \begin{itemize}
-        \item \cinline{YBIdxBaseTupleIdAttributeNumber} for index
+        \item bind: \textinline{pk} $=$ \sqlinline{'k'}
           \pause
-        \item \cinline{YBTupleIdAttributeNumber} for table
+        \item target: (same as above)
           \pause
-        \item \textinline{pk} for table for \sqlinline{SELECT *}
-          \pause
-        \item \textinline{a} for table for \sqlinline{SELECT *}
+        \item get: \{\sqlinline{'k'}, \sqlinline{ARRAY[5, 3]}\}
       \end{itemize}
       \pause
-    \item retrieve each row and recheck condition (unnecessary here)
+    \item recheck condition (unnecessary here)
   \end{itemize}
 \end{frame}
 
@@ -119,20 +137,48 @@
           \sqlinline{1} is additional, \sqlinline{3} is required
       \end{itemize}
       \pause
-    \item set up binds on index
+    \item scan index with
       \begin{itemize}
-        \item \textinline{a}$'$ $=$ \sqlinline{3}
+        \item bind: \textinline{a}$'$ $=$ \sqlinline{3}
+        \item target: \cinline{YBIdxBaseTupleIdAttributeNumber}
+          \pause
+        \item get: \sqlinline{'i'}, \sqlinline{'j'}, \sqlinline{'k'}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Read path with AND (continued)}
+  \begin{itemize}
+    \item scan main table with
+      \begin{itemize}
+        \item bind: \textinline{pk} $=$ \sqlinline{'i'}
+        \item target: (same as before)
+          \pause
+        \item get: \{\sqlinline{'i'}, \sqlinline{ARRAY[1, 3, 5, 3]}\}
       \end{itemize}
       \pause
-    \item set up targets on both index and indexed table
+    \item scan main table with
       \begin{itemize}
-        \item \cinline{YBIdxBaseTupleIdAttributeNumber} for index
-        \item \cinline{YBTupleIdAttributeNumber} for table
-        \item \textinline{pk} for table for \sqlinline{SELECT *}
-        \item \textinline{a} for table for \sqlinline{SELECT *}
+        \item bind: \textinline{pk} $=$ \sqlinline{'j'}
+        \item target: (same as before)
+          \pause
+        \item get: \{\sqlinline{'j'}, \sqlinline{ARRAY[1, 3, 2]}\}
       \end{itemize}
       \pause
-    \item retrieve each row and recheck condition
+    \item scan main table with
+      \begin{itemize}
+        \item bind: \textinline{pk} $=$ \sqlinline{'k'}
+        \item target: (same as before)
+          \pause
+        \item get: \{\sqlinline{'k'}, \sqlinline{ARRAY[5, 3]}\}
+      \end{itemize}
+      \pause
+    \item recheck condition
+      \pause
+      \begin{itemize}
+        \item throw away row with pk \sqlinline{'k'}
+      \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -163,7 +209,5 @@
         \item create a new bind operator to achieve the above
           \pause
       \end{enumerate}
-      \pause
-    \item retrieve each row and recheck condition (unnecessary here)
   \end{itemize}
 \end{frame}
