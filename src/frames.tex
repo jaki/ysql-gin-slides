@@ -100,6 +100,10 @@
       \pause
     \item scan index
       \begin{itemize}
+        \item \emph{Note: pggate scans have ``binds'' and ``targets'', and the
+          requests to DocDB behave like ``\sqlinline{SELECT <targets> FROM
+          <rel> WHERE <binds>}''}
+          \pause
         \item bind: \textinline{a}$'$ $=$ \sqlinline{5}
           \pause
         \item target: \cinline{YBIdxBaseTupleIdAttributeNumber}
