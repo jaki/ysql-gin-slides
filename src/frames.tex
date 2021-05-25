@@ -27,12 +27,36 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Write path}
+  \frametitle{DocDB schema}
   \sqlinline{CREATE TABLE arrs (pk char, a int[]);}
 
-  \sqlinline{CREATE INDEX ON arrs USING gin (a);}
+  creates a DocDB table with schema
+  \begin{itemize}
+    \item \sqlinline{pk char} $\rightarrow$ \sqlinline{a int[]}
+  \end{itemize}
   \pause
 
+  Assuming it were possible to create index on int array,
+
+  \sqlinline{CREATE INDEX ON arrs (a);}
+
+  would create a DocDB index with schema
+  \begin{itemize}
+    \item \sqlinline{a int[]} $\rightarrow$ \sqlinline{pk char}
+  \end{itemize}
+  \pause
+
+  \sqlinline{CREATE INDEX ON arrs USING gin (a);}
+
+  creates a DocDB index with schema
+  \begin{itemize}
+    \item \sqlinline{a}$'$\sqlinline{ int} $\rightarrow$ \sqlinline{pk char}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Write path}
   \sqlinline{INSERT INTO arrs VALUES ('i', ARRAY[1, 3, 5, 3]);}
   \pause
 
