@@ -15,20 +15,20 @@
 
   \begin{itemize}
     \item insert to the main table
-    \pause
+      \pause
     \item insert to the secondary index
-    \pause
+      \pause
       \begin{itemize}
         \item extract deduped scan entries: \textinline{1}, \textinline{3},
           \textinline{5}
-        \pause
+          \pause
         \item write records \emph{entry} $\rightarrow$ \emph{pk}:
-        \pause
+          \pause
           \begin{itemize}
             \item \textinline{1} $\rightarrow$ \textinline{11}
-            \pause
+              \pause
             \item \textinline{3} $\rightarrow$ \textinline{11}
-            \pause
+              \pause
             \item \textinline{5} $\rightarrow$ \textinline{11}
           \end{itemize}
       \end{itemize}
@@ -54,23 +54,23 @@
 
   \begin{itemize}
     \item extract scan entries: \textinline{5}
-    \pause
+      \pause
     \item set up binds on index
       \begin{itemize}
         \item \textinline{a}$'$ $=$ \textinline{5}
       \end{itemize}
-    \pause
+      \pause
     \item set up targets on both index and indexed table
       \begin{itemize}
         \item \cinline{YBIdxBaseTupleIdAttributeNumber} for index
-        \pause
+          \pause
         \item \cinline{YBTupleIdAttributeNumber} for table
-        \pause
+          \pause
         \item \textinline{pk} for table for \sqlinline{SELECT *}
-        \pause
+          \pause
         \item \textinline{a} for table for \sqlinline{SELECT *}
       \end{itemize}
-    \pause
+      \pause
     \item retrieve each row and recheck condition
   \end{itemize}
 \end{frame}
