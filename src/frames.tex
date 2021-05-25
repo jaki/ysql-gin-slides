@@ -200,12 +200,12 @@
           \pause
         \item do point index scans separately, deduplicate pkeys in postgres,
           then do table scans
+          \pause
         \item try IN bind: bind \textinline{a}$'$ IN \{\sqlinline{1},
           \sqlinline{2}\}, but make sure to deduplicate pkeys (e.g.\ the row
           with pkey \sqlinline{'j'})
           \pause
         \item create a new bind operator to achieve the above
-          \pause
       \end{enumerate}
   \end{itemize}
 \end{frame}
