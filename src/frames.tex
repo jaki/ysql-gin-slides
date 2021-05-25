@@ -5,19 +5,19 @@
 
 \begin{frame}
   \frametitle{Write path}
-  \sqlinline{CREATE TABLE arrs (pk int, a int[]);}
+  \sqlinline{CREATE TABLE arrs (pk char, a int[]);}
 
   \sqlinline{CREATE INDEX ON arrs USING gin (a);}
   \pause
 
-  \sqlinline{INSERT INTO arrs VALUES (11, '{1, 3, 5, 3}');}
+  \sqlinline{INSERT INTO arrs VALUES ('i', '{1, 3, 5, 3}');}
   \pause
 
   \begin{itemize}
     \item insert to the main table
       \pause
       \begin{itemize}
-        \item \sqlinline{11} $\mapsto$ \sqlinline{'{1, 3, 5, 3}'}
+        \item \sqlinline{'i'} $\mapsto$ \sqlinline{'{1, 3, 5, 3}'}
       \end{itemize}
       \pause
     \item insert to the secondary index
@@ -29,11 +29,11 @@
         \item write records \emph{entry} $\mapsto$ \emph{pk}:
           \pause
           \begin{itemize}
-            \item \sqlinline{1} $\mapsto$ \sqlinline{11}
+            \item \sqlinline{1} $\mapsto$ \sqlinline{'i'}
               \pause
-            \item \sqlinline{3} $\mapsto$ \sqlinline{11}
+            \item \sqlinline{3} $\mapsto$ \sqlinline{'i'}
               \pause
-            \item \sqlinline{5} $\mapsto$ \sqlinline{11}
+            \item \sqlinline{5} $\mapsto$ \sqlinline{'i'}
           \end{itemize}
       \end{itemize}
   \end{itemize}
@@ -43,25 +43,25 @@
   \frametitle{More inserts}
   For the sake of future examples, insert more rows:
 
-  \sqlinline{-- previous: INSERT INTO arrs VALUES (11, '{1, 3, 5, 3}');}
+  \sqlinline{-- previous: INSERT INTO arrs VALUES ('i', '{1, 3, 5, 3}');}
 
-  \sqlinline{INSERT INTO arrs VALUES (12, '{1, 3, 2}');}
+  \sqlinline{INSERT INTO arrs VALUES ('j', '{1, 3, 2}');}
 
-  \sqlinline{INSERT INTO arrs VALUES (13, '{5, 3}');}
+  \sqlinline{INSERT INTO arrs VALUES ('k', '{5, 3}');}
   \pause
 
   What would the index look like after these inserts?
   \pause
 
   \begin{itemize}
-    \item \sqlinline{1} $\mapsto$ \sqlinline{11}
-    \item \sqlinline{1} $\mapsto$ \sqlinline{12}
-    \item \sqlinline{2} $\mapsto$ \sqlinline{12}
-    \item \sqlinline{3} $\mapsto$ \sqlinline{11}
-    \item \sqlinline{3} $\mapsto$ \sqlinline{12}
-    \item \sqlinline{3} $\mapsto$ \sqlinline{13}
-    \item \sqlinline{5} $\mapsto$ \sqlinline{11}
-    \item \sqlinline{5} $\mapsto$ \sqlinline{13}
+    \item \sqlinline{1} $\mapsto$ \sqlinline{'i'}
+    \item \sqlinline{1} $\mapsto$ \sqlinline{'j'}
+    \item \sqlinline{2} $\mapsto$ \sqlinline{'j'}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{'i'}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{'j'}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{'k'}
+    \item \sqlinline{5} $\mapsto$ \sqlinline{'i'}
+    \item \sqlinline{5} $\mapsto$ \sqlinline{'k'}
   \end{itemize}
 \end{frame}
 
@@ -158,7 +158,7 @@
           then do table scans
         \item try IN bind: bind \textinline{a}$'$ IN \{\sqlinline{1},
           \sqlinline{2}\}, but make sure to deduplicate pkeys (e.g.\ the row
-          with pkey \sqlinline{12})
+          with pkey \sqlinline{'j'})
           \pause
         \item create a new bind operator to achieve the above
           \pause
