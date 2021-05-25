@@ -74,3 +74,41 @@
     \item retrieve each row and recheck condition
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Read path with AND}
+  Select rows whose array column contains elements \sqlinline{1} \emph{and}
+  \sqlinline{3}:
+
+  \sqlinline{SELECT * FROM arrs WHERE a @> '{3, 1, 3}';}
+  \pause
+
+  \begin{itemize}
+    \item extract scan entries: \textinline{1}, \textinline{3}
+      \pause
+    \item \textbf{split to required and additional entries}:
+      \pause
+      \begin{itemize}
+        \item ideally, the less frequent scan entry is chosen required:
+          \textinline{1} should be required
+          \pause
+        \item currently, hueristics aren't present, so it's arbitrary:
+          \textinline{1} is additional, \textinline{3} is required
+      \end{itemize}
+      \pause
+    \item set up binds on index
+      \begin{itemize}
+        \item \textinline{a}$'$ $=$ \textinline{3}
+      \end{itemize}
+      \pause
+    \item set up targets on both index and indexed table
+      \begin{itemize}
+        \item \cinline{YBIdxBaseTupleIdAttributeNumber} for index
+        \item \cinline{YBTupleIdAttributeNumber} for table
+        \item \textinline{pk} for table for \sqlinline{SELECT *}
+        \item \textinline{a} for table for \sqlinline{SELECT *}
+      \end{itemize}
+      \pause
+    \item retrieve each row and recheck condition
+  \end{itemize}
+\end{frame}
