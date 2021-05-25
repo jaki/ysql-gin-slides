@@ -17,23 +17,23 @@
     \item insert to the main table
       \pause
       \begin{itemize}
-        \item \textinline{11} $\mapsto$ \sqlinline{'{1, 3, 5, 3}'}
+        \item \sqlinline{11} $\mapsto$ \sqlinline{'{1, 3, 5, 3}'}
       \end{itemize}
       \pause
     \item insert to the secondary index
       \pause
       \begin{itemize}
-        \item extract deduped scan entries: \textinline{1}, \textinline{3},
-          \textinline{5}
+        \item extract deduped scan entries: \sqlinline{1}, \sqlinline{3},
+          \sqlinline{5}
           \pause
         \item write records \emph{entry} $\mapsto$ \emph{pk}:
           \pause
           \begin{itemize}
-            \item \textinline{1} $\mapsto$ \textinline{11}
+            \item \sqlinline{1} $\mapsto$ \sqlinline{11}
               \pause
-            \item \textinline{3} $\mapsto$ \textinline{11}
+            \item \sqlinline{3} $\mapsto$ \sqlinline{11}
               \pause
-            \item \textinline{5} $\mapsto$ \textinline{11}
+            \item \sqlinline{5} $\mapsto$ \sqlinline{11}
           \end{itemize}
       \end{itemize}
   \end{itemize}
@@ -54,14 +54,14 @@
   \pause
 
   \begin{itemize}
-    \item \textinline{1} $\mapsto$ \textinline{11}
-    \item \textinline{1} $\mapsto$ \textinline{12}
-    \item \textinline{2} $\mapsto$ \textinline{12}
-    \item \textinline{3} $\mapsto$ \textinline{11}
-    \item \textinline{3} $\mapsto$ \textinline{12}
-    \item \textinline{3} $\mapsto$ \textinline{13}
-    \item \textinline{5} $\mapsto$ \textinline{11}
-    \item \textinline{5} $\mapsto$ \textinline{13}
+    \item \sqlinline{1} $\mapsto$ \sqlinline{11}
+    \item \sqlinline{1} $\mapsto$ \sqlinline{12}
+    \item \sqlinline{2} $\mapsto$ \sqlinline{12}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{11}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{12}
+    \item \sqlinline{3} $\mapsto$ \sqlinline{13}
+    \item \sqlinline{5} $\mapsto$ \sqlinline{11}
+    \item \sqlinline{5} $\mapsto$ \sqlinline{13}
   \end{itemize}
 \end{frame}
 
@@ -76,11 +76,11 @@
   \pause
 
   \begin{itemize}
-    \item extract scan entries: \textinline{5}
+    \item extract scan entries: \sqlinline{5}
       \pause
     \item set up binds on index
       \begin{itemize}
-        \item \textinline{a}$'$ $=$ \textinline{5}
+        \item \textinline{a}$'$ $=$ \sqlinline{5}
       \end{itemize}
       \pause
     \item set up targets on both index and indexed table
@@ -107,21 +107,21 @@
   \pause
 
   \begin{itemize}
-    \item extract scan entries: \textinline{1}, \textinline{3}
+    \item extract scan entries: \sqlinline{1}, \sqlinline{3}
       \pause
     \item \textbf{split to required and additional entries}:
       \pause
       \begin{itemize}
         \item ideally, the less frequent scan entry is chosen required:
-          \textinline{1} should be required
+          \sqlinline{1} should be required
           \pause
         \item currently, hueristics aren't present, so it's arbitrary:
-          \textinline{1} is additional, \textinline{3} is required
+          \sqlinline{1} is additional, \sqlinline{3} is required
       \end{itemize}
       \pause
     \item set up binds on index
       \begin{itemize}
-        \item \textinline{a}$'$ $=$ \textinline{3}
+        \item \textinline{a}$'$ $=$ \sqlinline{3}
       \end{itemize}
       \pause
     \item set up targets on both index and indexed table
@@ -144,7 +144,7 @@
   \pause
 
   \begin{itemize}
-    \item extract scan entries: \textinline{1}, \textinline{2}
+    \item extract scan entries: \sqlinline{1}, \sqlinline{2}
       \pause
     \item split to required and additional entries: both are required
       \pause
@@ -156,8 +156,8 @@
           \pause
         \item do point index scans separately, deduplicate pkeys in postgres,
           then do table scans
-        \item try IN bind: bind \textinline{a}$'$ IN \{\textinline{1},
-          \textinline{2}\}, but make sure to deduplicate pkeys (e.g.\ the row
+        \item try IN bind: bind \textinline{a}$'$ IN \{\sqlinline{1},
+          \sqlinline{2}\}, but make sure to deduplicate pkeys (e.g.\ the row
           with pkey \sqlinline{12})
           \pause
         \item create a new bind operator to achieve the above
