@@ -18,6 +18,9 @@
         \item \sqlinline{jsonb}
       \end{itemize}
       \pause
+    \item \textinline{pg_trgm} extension for trigram matching supports GIN
+      index on type \sqlinline{text}
+      \pause
     \item Yugabyte will support GIN indexes on the same types, but
       prioritization is in the order above
   \end{itemize}
