@@ -1,1 +1,1 @@
-CREATE TABLE arrs (pk char, a int[]);
+CREATE TABLE arrs (pk char PRIMARY KEY, a int[]);
