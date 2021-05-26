@@ -1,0 +1,1 @@
+SELECT * FROM arrs WHERE a && ARRAY[5];
