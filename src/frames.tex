@@ -243,7 +243,9 @@
       \pause
       \begin{enumerate}
         \item don't allow more than one required scan entry: user can rewrite
-          the query as \sqlinline{WHERE a && ARRAY[1] or a && ARRAY[2]}
+          the query as \sqlinline{SELECT * FROM arrs WHERE a && ARRAY[1] UNION
+          SELECT * FROM arrs WHERE a && ARRAY[2]}, but this is not always
+          possible (e.g.\ trigrams)
           \pause
         \item do point index scans separately, deduplicate pkeys in postgres,
           then do table scans
